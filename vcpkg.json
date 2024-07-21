@@ -1,0 +1,6 @@
+{
+  "dependencies": [
+    "bitsery",
+    "dxsdk-d3dx"
+  ]
+}
