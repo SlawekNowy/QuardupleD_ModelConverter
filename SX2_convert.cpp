@@ -6,9 +6,6 @@
 #include "SX2_convert.h"
 #include <filesystem>
 
-#include <d3d9.h>
-#include <D3DX9Mesh.h>
-#include <windows.h>
 
 
 #pragma comment(lib,"D3D9.lib")
@@ -146,7 +143,7 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		std::cout << "Usage SX2_convert.exe "
+		std::cout << "Usage SX2_convert.exe [absolute path to SX file]";
 		}
 }
 

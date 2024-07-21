@@ -6,6 +6,9 @@
 #include <iostream>
 #include <cstdint>
 
+#include <d3d9.h>
+#include <D3DX9Mesh.h>
+#include <windows.h>
 #include <bitsery/traits/core/traits.h>
 
 #include <bitsery/traits/array.h>
@@ -28,7 +31,7 @@ void serialize(S& s, QD_SX& o) {
 	s.container1b(o.magic);
 	s.value2b(o.nVertices);
 	s.value2b(o.nIndices);
-	if (o.magic == "Simplified_X00  ") {
+	if (std::strncmp(o.magic,"Simplified_X00  ",16)==0) {
 		o.dwFWF = D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_DIFFUSE|D3DFVF_SPECULAR|D3DFVF_TEX1;
 		o.vertexSize = 40;
 		o.DXVersion[0] = '0';

@@ -20,7 +20,8 @@ find_package(dxsdk-d3dx CONFIG REQUIRED)
 target_link_libraries(SX2_convert PRIVATE Microsoft::D3DX9 Microsoft::D3DX10 Microsoft::D3DX11)
 target_include_directories(SX2_convert PRIVATE Microsoft::D3DX9 Microsoft::D3DX10 Microsoft::D3DX11)
 
-
+find_package(Bitsery CONFIG REQUIRED)
+target_link_libraries(SX2_convert PRIVATE Bitsery::bitsery)
 target_include_directories(SX2_convert PRIVATE Bitsery::bitsery)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET SX2_convert PROPERTY CXX_STANDARD 20)
