@@ -1,6 +1,9 @@
 {
-  "dependencies": [
-    "bitsery",
-    "dxsdk-d3dx"
-  ]
+	"$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+	"name": "vsif2vcd",
+	"version-string": "1.1.0",
+	"dependencies": [
+		"bitsery",
+		"dxsdk-d3dx"
+	]
 }

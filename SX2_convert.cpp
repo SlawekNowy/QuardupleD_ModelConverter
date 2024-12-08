@@ -99,14 +99,16 @@ int main(int argc, char** argv)
 			&d3dpp, &d3dDevice);
 
 		D3DXCreateMeshFVF(header.nIndices / 3, header.nVertices, 0, header.dwFWF,d3dDevice , &mesh);
-		
+#ifndef NDEBUG
+		D3DVERTEXELEMENT9 fvfStruct[MAX_FVF_DECL_SIZE] = { 0 };
+		D3DXDeclaratorFromFVF(header.dwFWF, fvfStruct);
 		mesh->GetVertexBuffer(&vertexBufInter);
 		mesh->GetIndexBuffer(&indexBufInter);
 		D3DVERTEXBUFFER_DESC vertexBufferDesc;
 		D3DINDEXBUFFER_DESC indexBufferDesc;
 		vertexBufInter->GetDesc(&vertexBufferDesc);
 		indexBufInter->GetDesc(&indexBufferDesc);
-
+#endif
 		char* vertexBuf, *indexBuf;
 
 		vertexBufInter->Lock(0, 0, (void**)&vertexBuf, 0);
@@ -115,20 +117,23 @@ int main(int argc, char** argv)
 		indexBufInter->Lock(0, 0, (void**)&indexBuf, 0);
 		std::memcpy(indexBuf, indexBuffer.data(), 2 * header.nIndices);
 		indexBufInter->Unlock();
+		/*
 		int textureNum = (D3DFVF_TEXCOUNT_MASK & header.dwFWF) >> D3DFVF_TEXCOUNT_SHIFT;
 		D3DXMATERIAL* materials = new D3DXMATERIAL[textureNum]{ 0 };
+		
 		for (int i = 0; i < textureNum; i++) {
 			materials[i].MatD3D.Power = 10;
 			materials[i].MatD3D.Diffuse = materials[i].MatD3D.Specular = materials[i].MatD3D.Specular = { 1,1,1,1 };
 			materials[i].MatD3D.Emissive = { 0,0,0,1 };
 			materials[i].pTextureFilename = const_cast<char*>("");
 		}
+		*/
 		std::filesystem::path pathObj(file);
 			std::string pathOut;
 			std::filesystem::create_directory(pathObj.parent_path().string() + "/orig");
 
 			pathOut = pathObj.parent_path().string() + "\\" +"orig" + "\\" + pathObj.stem().string() + ".x";
-		D3DXSaveMeshToX(pathOut.data(), mesh, NULL, materials, NULL, textureNum, D3DXF_FILEFORMAT_TEXT);
+		D3DXSaveMeshToX(pathOut.data(), mesh, NULL, NULL, NULL, 0, D3DXF_FILEFORMAT_TEXT);
 
 
 		vertexBufInter->Release();
