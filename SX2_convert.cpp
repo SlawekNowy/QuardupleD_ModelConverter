@@ -86,9 +86,9 @@ int main(int argc, char** argv)
 		IDirect3D9* g_d3d9 = Direct3DCreate9(D3D_SDK_VERSION);
 		LPDIRECT3DDEVICE9 d3dDevice = NULL;
 
-		D3DPRESENT_PARAMETERS d3dpp;
-		LPDIRECT3DVERTEXBUFFER9 vertexBufInter;
-		LPDIRECT3DINDEXBUFFER9 indexBufInter;
+		D3DPRESENT_PARAMETERS d3dpp = { 0 };
+		LPDIRECT3DVERTEXBUFFER9 vertexBufInter = NULL;
+		LPDIRECT3DINDEXBUFFER9 indexBufInter = NULL;
 
 		std::memset(&d3dpp, 0, sizeof(D3DPRESENT_PARAMETERS));
 		d3dpp.Windowed = TRUE;
@@ -99,11 +99,12 @@ int main(int argc, char** argv)
 			&d3dpp, &d3dDevice);
 
 		D3DXCreateMeshFVF(header.nIndices / 3, header.nVertices, 0, header.dwFWF,d3dDevice , &mesh);
+
+		mesh->GetVertexBuffer(&vertexBufInter);
+		mesh->GetIndexBuffer(&indexBufInter);
 #ifndef NDEBUG
 		D3DVERTEXELEMENT9 fvfStruct[MAX_FVF_DECL_SIZE] = { 0 };
 		D3DXDeclaratorFromFVF(header.dwFWF, fvfStruct);
-		mesh->GetVertexBuffer(&vertexBufInter);
-		mesh->GetIndexBuffer(&indexBufInter);
 		D3DVERTEXBUFFER_DESC vertexBufferDesc;
 		D3DINDEXBUFFER_DESC indexBufferDesc;
 		vertexBufInter->GetDesc(&vertexBufferDesc);
